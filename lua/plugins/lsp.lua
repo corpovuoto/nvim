@@ -20,6 +20,9 @@ return {
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
+      -- Ensure FloatBorder highlight is set before handlers use it
+      vim.api.nvim_set_hl(0, "FloatBorder", { link = "Visual" })
+      
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       
@@ -160,6 +163,4 @@ return {
     end,
   }
 }
-
-vim.api.nvim_set_hl(0, "FloatBorder", { link = "Identifier" })
 
