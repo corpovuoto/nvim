@@ -20,23 +20,12 @@ return {
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      -- Ensure FloatBorder highlight is set before handlers use it
-      vim.api.nvim_set_hl(0, "FloatBorder", { link = "Visual" })
+      -- Ensure FloatBorder highlight is set in highlights.lua
       
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       
       -- Custom border style - Replaced with "single" for testing
-      -- local border = {
-      --   { "╭", "FloatBorder" },
-      --   { "─", "FloatBorder" },
-      --   { "╮", "FloatBorder" },
-      --   { "│", "FloatBorder" },
-      --   { "╯", "FloatBorder" },
-      --   { "─", "FloatBorder" },
-      --   { "╰", "FloatBorder" },
-      --   { "│", "FloatBorder" },
-      -- }
       local border_style = "single" -- Use built-in single border
       
       -- Configure diagnostic float borders
@@ -47,28 +36,29 @@ return {
         }
       })
       
-      -- Override default handlers to use custom borders
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border_style })
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border_style })
-      
-      -- Define LSP keybindings
+      -- Define LSP keybindings and handlers within on_attach
       local on_attach = function(_, bufnr)
-        local bufmap = function(mode, lhs, rhs)
-          vim.keymap.set(mode, lhs, rhs, { buffer = bufnr })
+        -- Set hover handler specifically for this attached buffer/LSP
+        -- Note: This is less conventional, handlers are usually global
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border_style })
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border_style })
+
+        local bufmap = function(mode, lhs, rhs, desc_suffix)
+          vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = "LSP " .. desc_suffix })
         end
         
         -- Navigation
-        bufmap("n", "gd", vim.lsp.buf.definition)
-        bufmap("n", "K", vim.lsp.buf.hover)
-        bufmap("n", "gr", vim.lsp.buf.references)
+        bufmap("n", "gd", vim.lsp.buf.definition, "definition")
+        bufmap("n", "K", vim.lsp.buf.hover, "hover") -- Use the function reference
+        bufmap("n", "gr", vim.lsp.buf.references, "references")
         
         -- Refactoring
-        bufmap("n", "<leader>rn", vim.lsp.buf.rename)
-        bufmap("n", "<leader>ca", vim.lsp.buf.code_action)
+        bufmap("n", "<leader>rn", vim.lsp.buf.rename, "rename")
+        bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "code_action")
         
         -- Diagnostics
-        bufmap("n", "[d", vim.diagnostic.goto_prev)
-        bufmap("n", "]d", vim.diagnostic.goto_next)
+        bufmap("n", "[d", vim.diagnostic.goto_prev, "diagnostic.goto_prev")
+        bufmap("n", "]d", vim.diagnostic.goto_next, "diagnostic.goto_next")
         -- bufmap("n", "<leader>e", vim.diagnostic.open_float) -- User commented this out
       end
 
