@@ -23,6 +23,22 @@ return {
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       
+      -- Custom border style
+      local border = {
+        { "╭", "FloatBorder" },
+        { "─", "FloatBorder" },
+        { "╮", "FloatBorder" },
+        { "│", "FloatBorder" },
+        { "╯", "FloatBorder" },
+        { "─", "FloatBorder" },
+        { "╰", "FloatBorder" },
+        { "│", "FloatBorder" },
+      }
+      
+      -- Override default handlers to use custom borders
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+      
       -- Define LSP keybindings
       local on_attach = function(_, bufnr)
         local bufmap = function(mode, lhs, rhs)
@@ -48,7 +64,7 @@ return {
       local servers = {
         "lua_ls", 
         "pyright", 
-        "tsserver",
+        "ts_ls",
         "clangd", 
         "rust_analyzer", 
         "hls"
