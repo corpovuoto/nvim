@@ -1,5 +1,5 @@
 require("config.lazy")
-require("config.lsp")
+-- require("config.lsp")  -- Disabled to avoid conflict with plugins/lsp.lua
 require("config.highlights")
 require("config.telescope")
 require("config.treesitter")
