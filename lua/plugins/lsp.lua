@@ -57,24 +57,51 @@ return {
         -- Diagnostics
         bufmap("n", "[d", vim.diagnostic.goto_prev)
         bufmap("n", "]d", vim.diagnostic.goto_next)
-        --bufmap("n", "<leader>e", vim.diagnostic.open_float)
+        -- bufmap("n", "<leader>e", vim.diagnostic.open_float) -- User commented this out
       end
 
       -- Server configurations
       local servers = {
         "lua_ls", 
         "pyright", 
-        "ts_ls",
+        "ts_ls", -- User changed this back
         "clangd", 
         "rust_analyzer", 
         "hls"
       }
       
-      for _, server in ipairs(servers) do
-        lspconfig[server].setup {
+      for _, server_name in ipairs(servers) do
+        local server_opts = {
           capabilities = capabilities,
           on_attach = on_attach,
         }
+
+        -- Apply lua_ls specific settings
+        if server_name == "lua_ls" then
+          server_opts.settings = {
+            Lua = {
+              runtime = {
+                -- Tell the language server which version of Lua you're using
+                version = 'LuaJIT',
+              },
+              diagnostics = {
+                globals = { "vim" },
+              },
+              workspace = {
+                checkThirdParty = false,
+                -- Make the server aware of Neovim runtime files
+                library = {
+                  vim.env.VIMRUNTIME,
+                  -- Depending on setup, this might be needed for plugins
+                  "${3rd}/luv/library", 
+                },
+              },
+              telemetry = { enable = false },
+            }
+          }
+        end
+        
+        lspconfig[server_name].setup(server_opts)
       end
     end,
   },
@@ -133,4 +160,6 @@ return {
     end,
   }
 }
+
+vim.api.nvim_set_hl(0, "FloatBorder", { link = "Identifier" })
 
