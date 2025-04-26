@@ -26,21 +26,30 @@ return {
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       
-      -- Custom border style
-      local border = {
-        { "╭", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╮", "FloatBorder" },
-        { "│", "FloatBorder" },
-        { "╯", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╰", "FloatBorder" },
-        { "│", "FloatBorder" },
-      }
+      -- Custom border style - Replaced with "single" for testing
+      -- local border = {
+      --   { "╭", "FloatBorder" },
+      --   { "─", "FloatBorder" },
+      --   { "╮", "FloatBorder" },
+      --   { "│", "FloatBorder" },
+      --   { "╯", "FloatBorder" },
+      --   { "─", "FloatBorder" },
+      --   { "╰", "FloatBorder" },
+      --   { "│", "FloatBorder" },
+      -- }
+      local border_style = "single" -- Use built-in single border
+      
+      -- Configure diagnostic float borders
+      vim.diagnostic.config({
+        float = {
+          border = border_style, -- Use the same style
+          source = "always", 
+        }
+      })
       
       -- Override default handlers to use custom borders
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border_style })
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border_style })
       
       -- Define LSP keybindings
       local on_attach = function(_, bufnr)
