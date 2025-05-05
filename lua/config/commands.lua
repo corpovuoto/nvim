@@ -3,3 +3,6 @@ function ShowBinds()
 		print(map.lhs, "->", map.rhs)
 	end
 end
+
+vim.keymap.set("n", "<leader>sb", ":lua ShowBinds()<CR>", {})
+

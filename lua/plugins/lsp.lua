@@ -32,7 +32,7 @@ return {
 			vim.diagnostic.config({
 				float = {
 					border = border_style, -- Use the same style
-					source = "always", 
+					source = "always"
 				}
 			})
 

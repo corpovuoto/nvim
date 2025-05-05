@@ -6,4 +6,3 @@ require("config.treesitter")
 require("config.keymaps")
 require("config.cmp")
 require("config.undotree")
-
