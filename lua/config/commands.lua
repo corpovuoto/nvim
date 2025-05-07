@@ -1,8 +1,5 @@
-function ShowBinds()
-	for _, map in ipairs(vim.api.nvim_get_keymap('n')) do
-		print(map.lhs, "->", map.rhs)
-	end
+function getOS()
+    return package.config:sub(1,1) == "\\" and "win" or "unix"
 end
-
 vim.keymap.set("n", "<leader>sb", ":lua ShowBinds()<CR>", {})
 

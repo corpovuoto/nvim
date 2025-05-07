@@ -1,5 +1,6 @@
 vim.cmd("colorscheme elflord")
 
+-- returns "win" or "unix"
 require("config")
 
 
@@ -18,4 +19,5 @@ vim.opt.shiftwidth = 4    -- Number of spaces used for autoindent
 
 vim.cmd(":set relativenumber")
 vim.cmd(":set number")
+
 

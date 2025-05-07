@@ -10,7 +10,17 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "mason.nvim" },
-		config = true,
+		config = function() 
+			require("mason-lspconfig").setup {
+				ensure_installed = {
+				"lua_ls", 
+				"pyright", 
+				"clangd", 
+				"rust_analyzer", 
+				"hls"
+			},
+			}
+		end,
 	},
 
 	-- LSP Configuration
@@ -71,11 +81,11 @@ return {
 			local servers = {
 				"lua_ls", 
 				"pyright", 
-				"ts_ls", -- User changed this back
 				"clangd", 
 				"rust_analyzer", 
 				"hls"
 			}
+
 
 			for _, server_name in ipairs(servers) do
 				local server_opts = {
@@ -103,7 +113,6 @@ return {
 									"${3rd}/luv/library", 
 								},
 							},
-							telemetry = { enable = false },
 						}
 					}
 				end
