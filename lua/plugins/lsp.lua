@@ -13,12 +13,12 @@ return {
 		config = function() 
 			require("mason-lspconfig").setup {
 				ensure_installed = {
-				"lua_ls", 
-				"pyright", 
-				"clangd", 
-				"rust_analyzer", 
-				"hls"
-			},
+					"lua_ls", 
+					"pyright", 
+					"clangd", 
+					"rust_analyzer", 
+					"hls"
+				},
 			}
 		end,
 	},
@@ -74,7 +74,11 @@ return {
 				-- Diagnostics
 				bufmap("n", "[d", vim.diagnostic.goto_prev, "diagnostic.goto_prev")
 				bufmap("n", "]d", vim.diagnostic.goto_next, "diagnostic.goto_next")
-				-- bufmap("n", "<leader>e", vim.diagnostic.open_float) -- User commented this out
+				bufmap("n", "<leader>d", vim.diagnostic.open_float ,"diagnostic.open_float") 
+				bufmap("n", "<leader>mf", function()
+					vim.lsp.buf.format({ async = true })
+				end, "LSP format")
+
 			end
 
 			-- Server configurations
@@ -85,7 +89,9 @@ return {
 				"rust_analyzer", 
 				"hls"
 			}
-
+			require('lspconfig').clangd.setup {
+				  root_dir = require('lspconfig.util').root_pattern('.clangd', '.clang-format'),
+			}
 
 			for _, server_name in ipairs(servers) do
 				local server_opts = {
@@ -116,6 +122,7 @@ return {
 						}
 					}
 				end
+
 
 				lspconfig[server_name].setup(server_opts)
 			end

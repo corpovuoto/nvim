@@ -1,11 +1,11 @@
-local os = getOS()
+local os = GetOS()
 
 vim.keymap.set("n", "<leader>tn", ":tabnew<CR>")
 if os == "win" then
-	vim.keymap.set("n", "<leader>C", ":e ~/AppData/Local/nvim/lua<CR>")
+	vim.keymap.set("n", "<leader>C", ":e ~/AppData/Local/nvim<CR>")
 else
 	
-	vim.keymap.set("n", "<leader>C", ":e ~/.config/nvim/lua<CR>")
+	vim.keymap.set("n", "<leader>C", ":e ~/.config/nvim<CR>")
 end
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle NvimTree' })
 
@@ -27,7 +27,7 @@ vim.keymap.set('n', 'N', 'Nzzzv')
 
 
 -- Format document 'mf' -> 'modify format'
-vim.keymap.set("n", "<leader>mf", "ggVG=", {})
+-- vim.keymap.set("n", "<leader>mf", "ggVG=", {})
 
 -- Auto close perenthesis etc
 vim.keymap.set("i", "(", "()<Left>", {})
@@ -42,3 +42,10 @@ vim.keymap.set("n", "<M-v>", "<C-v>")
 -- WhichKey shortcut
 vim.keymap.set('n', '<leader>wk', ':WhichKey<CR>')
 
+-- switch all tabs with spaces
+vim.keymap.set("n", "<leader>st", ":%s/\t/    /g<CR>", {desc = "switch tabs to spaces"})
+
+-- remove highlits with esc
+vim.keymap.set("n", "<Esc>", ":noh<CR>", {})
+
+vim.keymap.set("n", "<leader>mf", "ggVG=<CR>")
