@@ -72,9 +72,9 @@ return {
 				bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "code_action")
 
 				-- Diagnostics
-				bufmap("n", "[d", vim.diagnostic.goto_prev, "diagnostic.goto_prev")
-				bufmap("n", "]d", vim.diagnostic.goto_next, "diagnostic.goto_next")
-				bufmap("n", "<leader>d", vim.diagnostic.open_float ,"diagnostic.open_float") 
+				bufmap("n", "[d", vim.diagnostic.get_prev, "diagnostic.goto_prev")
+				bufmap("n", "]d", vim.diagnostic.get_next, "diagnostic.goto_next")
+				bufmap("n", "<leader>d", vim.diagnostic.open_float,"diagnostic.open_float") 
 				bufmap("n", "<leader>mf", function()
 					vim.lsp.buf.format({ async = true })
 				end, "LSP format")

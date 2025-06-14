@@ -4,7 +4,6 @@ vim.keymap.set("n", "<leader>tn", ":tabnew<CR>")
 if os == "win" then
 	vim.keymap.set("n", "<leader>C", ":e ~/AppData/Local/nvim<CR>")
 else
-	
 	vim.keymap.set("n", "<leader>C", ":e ~/.config/nvim<CR>")
 end
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle NvimTree' })
@@ -49,3 +48,13 @@ vim.keymap.set("n", "<leader>st", ":%s/\t/    /g<CR>", {desc = "switch tabs to s
 vim.keymap.set("n", "<Esc>", ":noh<CR>", {})
 
 vim.keymap.set("n", "<leader>mf", "ggVG=<CR>")
+
+vim.keymap.set("v", "a'", "c'<Esc>pa'<Esc>")
+vim.keymap.set("v", "a\"", "c\"<Esc>pa\"<Esc>")
+vim.keymap.set("v", "a`", "c`<Esc>pa`<Esc>")
+vim.keymap.set("v", "a(", "c(<Esc>pa)<Esc>")
+vim.keymap.set("v", "a[", "c[<Esc>pa]<Esc>")
+vim.keymap.set("v", "a{", "c{<Esc>pa}<Esc>")
+
+
+vim.cmd(":tnoremap <Esc> <C-\\><C-n>")

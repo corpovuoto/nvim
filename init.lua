@@ -1,25 +1,18 @@
 vim.o.termguicolors = true
 vim.cmd("colorscheme sunbather")
-
-
-N = "C:/Users/matte/Desktop/N O T E S/"
-
-D = "C:/Users/matte/dev/"
-
-P = "C:/Users/matte/dev/Progetti/"
-
+vim.api.nvim_set_hl(0, "RenderMarkdownCode", {bg = "#a494d4", fg = "#000000"})
 
 function GetOS()
 	return package.config:sub(1, 1) == "\\" and "win" or "unix"
 end
 
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		if vim.fn.argc() == 0 then
-			vim.cmd("cd ~/dev")
-		end
-	end
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	callback = function()
+-- 		if vim.fn.argc() == 0 then
+-- 			vim.cmd("cd ~/dev")
+-- 		end
+-- 	end
+-- })
 
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("cache") .. "/undo"
@@ -50,6 +43,15 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "cpp",
+	callback = function()
+		vim.bo.expandtab = true -- Use spaces instead of tabs
+		vim.bo.shiftwidth = 2 -- Indentation width
+		vim.bo.tabstop = 2  -- Number of spaces for a tab
+	end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "c",
 	callback = function()
 		vim.bo.expandtab = true -- Use spaces instead of tabs
 		vim.bo.shiftwidth = 2 -- Indentation width
