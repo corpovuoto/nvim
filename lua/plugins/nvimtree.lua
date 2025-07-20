@@ -7,7 +7,9 @@ return {
 		require('nvim-tree').setup({
 			view = {
 				width = 30,
-				side = "left",
+				float = {
+					enable = true,
+				},
 			},
 			renderer = {
 				icons = {
