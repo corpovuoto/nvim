@@ -4,6 +4,8 @@ return {
   lazy = false,
   priority = 1000,
   config = function()
-    require("pywal").setup()
+	  if GetOS() ~= "win" then
+		  require("pywal").setup()
+	  end
   end,
 }

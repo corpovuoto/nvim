@@ -64,3 +64,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 require("config")
+
+
+if GetOS() == "win" then
+	vim.cmd("colorscheme sunbather")
+end
