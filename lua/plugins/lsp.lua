@@ -17,6 +17,7 @@ return {
 				"lua_ls",
 				"clangd",
 				"rust_analyzer",
+				"typescript-language-server",
 			},
 		}
 	end,
@@ -31,7 +32,7 @@ return {
 	config = function()
 		-- Ensure FloatBorder highlight is set in highlights.lua
 
-		local lspconfig = require("lspconfig")
+		local lspconfig = vim.lsp.config
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 		-- Custom border style - Replaced with "single" for testing
@@ -83,14 +84,11 @@ return {
 
 		-- Server configurations
 		local servers = {
-			"lua_ls", 
-			"pyright", 
-			"clangd", 
-			"rust_analyzer", 
-			"ts_ls"
-		}
-		require('lspconfig').clangd.setup {
-			root_dir = require('lspconfig.util').root_pattern('.clangd', '.clang-format'),
+			"lua_ls",
+			"pyright",
+			"clangd",
+			"rust_analyzer",
+			"ts_ls",
 		}
 
 		for _, server_name in ipairs(servers) do
@@ -116,14 +114,21 @@ return {
 							library = {
 								vim.env.VIMRUNTIME,
 								-- Depending on setup, this might be needed for plugins
-								"${3rd}/luv/library", 
+								"${3rd}/luv/library",
 							},
 						},
 					}
 				}
 			end
 
-			lspconfig[server_name].setup(server_opts)
+			-- clangd: set a custom root_dir
+			if server_name == 'clangd' then
+				server_opts.root_dir = require('lspconfig.util').root_pattern('.clangd', '.clang-format')
+			end
+
+			-- Use the new vim.lsp.config API to define/override and enable the config
+			vim.lsp.config(server_name, server_opts)
+			vim.lsp.enable(server_name)
 		end
 	end,
 },
@@ -182,4 +187,5 @@ return {
 	end,
 }
 }
+
 

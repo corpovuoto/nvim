@@ -42,7 +42,7 @@ vim.keymap.set("n", "<M-v>", "<C-v>")
 vim.keymap.set('n', '<leader>wk', ':WhichKey<CR>')
 
 -- switch all tabs with spaces
-vim.keymap.set("n", "<leader>st", ":%s/\t/    /g<CR>", {desc = "switch tabs to spaces"})
+vim.keymap.set("n", "<leader>st", ":%s/\t/    /g<CR>", { desc = "switch tabs to spaces" })
 
 -- remove highlits with esc
 vim.keymap.set("n", "<Esc>", ":noh<CR>", {})
@@ -56,5 +56,42 @@ vim.keymap.set("v", "a(", "c(<Esc>pa)<Esc>")
 vim.keymap.set("v", "a[", "c[<Esc>pa]<Esc>")
 vim.keymap.set("v", "a{", "c{<Esc>pa}<Esc>")
 
+-- lisp, sbcl, nvlime
+
+vim.keymap.set("n", "\\sbcl",
+	function()
+		local toLoad = 'C:Users/matte/Programming/nvlime/lisp/start-nvlime.lisp'
+		local spaceSize = "--dynamic-space-size 4Gb"
+		local toEval = [[
+        	(nvlime:main :interface #(127 0 0 1)
+                    :port 7002
+                    :backend :nvlime-usocket)
+		]]
+		local command = 'sbcl %s --load %s --eval %s'
+		local formatted = string.format(command, spaceSize, toLoad, toEval)
+		require('os').execute(formatted)
+	end
+)
+
+--
 
 vim.cmd(":tnoremap <Esc> <C-\\><C-n>")
+
+
+
+
+vim.keymap.set("n", "<leader>hl",
+	function ()
+		local lualine = require('lualine')
+		lualine.hide()
+	end
+)
+
+vim.keymap.set("n", "<leader>gy",
+	function ()
+		local lualine = require('lualine')
+		lualine.hide()
+		vim.cmd(":Goyo")
+	end
+)
+

@@ -3,5 +3,5 @@ return {
 	dependencies = {
 		'monkoose/parsley',
 		"MunifTanjim/nui.nvim",
-	},
+	}
 }
